@@ -1,11 +1,11 @@
-FROM golang:1.14.1-alpine3.11 AS build
+FROM golang:alpine AS build
 
 RUN apk add --no-cache --update git
 WORKDIR /develop
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o docker-flow-swarm-listener -ldflags '-w'
 
-FROM alpine:3.11
+FROM alpine
 LABEL maintainer="Viktor Farcic <viktor@farcic.com>"
 
 ENV DF_DOCKER_HOST="unix:///var/run/docker.sock" \
